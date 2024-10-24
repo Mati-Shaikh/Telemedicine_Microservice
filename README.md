@@ -1,11 +1,35 @@
-# Sample Snack app
+# Telemedicine App
 
-Open the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Documentation](#api-documentation)
+- [Contributing](#contributing)
+- [License](#license)
 
-When you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).
+## Overview
+The Telemedicine App is a web-based platform that allows patients to connect with healthcare providers remotely. This app aims to streamline the process of scheduling appointments, accessing medical advice, and managing health records, ensuring that patients receive timely care from the comfort of their homes.
 
-All projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.
+## Features
+- **User Authentication:** Secure login and registration for patients and healthcare providers.
+- **Appointment Scheduling:** Easy booking of virtual consultations.
+- **Video Conferencing:** Integrated video call functionality for real-time consultations.
+- **Prescription Management:** Doctors can issue electronic prescriptions to patients.
+- **Health Records:** Patients can view and manage their medical history and prescriptions.
+- **Notifications:** Automated reminders for upcoming appointments and new messages.
 
-If you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).
+## Technologies Used
+- **Frontend:** ReactNative, Tailwind CSS
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Others:** JWT for authentication, Socket.io for real-time communication
 
-Snack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).
+## Installation
+To run the app locally, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/MatiShaikh/Telemedicine-Microservice.git
