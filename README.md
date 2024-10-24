@@ -26,6 +26,7 @@ The Telemedicine App is a web-based platform that allows patients to connect wit
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
 - **Others:** JWT for authentication, Socket.io for real-time communication
+<<<<<<< HEAD
 
 ## Installation
 To run the app locally, follow these steps:
@@ -33,3 +34,13 @@ To run the app locally, follow these steps:
 1. Clone the repository:
    ```bash
    git clone https://github.com/MatiShaikh/Telemedicine-Microservice.git
+=======
+
+## Installation
+To run the app locally, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/MatiShaikh/Telemedicine-Microservice.git
+
+>>>>>>> 1d57138d400638c2d68466ef6b3782d8d6559bca
