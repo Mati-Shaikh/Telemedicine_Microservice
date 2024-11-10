@@ -10,10 +10,9 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleRegister = () => {
    
-    if (formData.password === formData.confirmPassword) {
-      // Proceed with registration
-      // alert('Registration Successful');
-      navigation.replace('MainApp'); 
+   if (formData.password === formData.confirmPassword && formData.email && formData.password) {
+    
+    navigation.replace('MainApp');
     } else {
       alert('Passwords do not match');
     }
