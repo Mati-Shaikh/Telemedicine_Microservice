@@ -6,14 +6,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from './screens/LoginScreen';
 //import RegisterScreen from './screens/RegisterScreen';
-//import OTPScreen from './screens/OTPScreen';
+import DoctorListScreen from './screens/DoctorListScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import AppointmentScreen from './screens/AppointmentScreen';
 import ConsultScreen from './screens/ConsultScreen';
 import EducationScreen from './screens/EducationScreen';
-import ChatScreen from './screens/ChatScreen';
-
+import ChatScreen from './screens/ChatRoomScreen';
+import DoctorChatRoom from './screens/DoctorChat';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -65,6 +65,11 @@ export default function App() {
           component={LoginScreen} 
         />
         <Stack.Screen 
+          name="DoctorChatRoom" 
+          component={DoctorChatRoom} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
           name="Register" 
           //component={RegisterScreen} 
         />
@@ -75,6 +80,10 @@ export default function App() {
         <Stack.Screen 
           name="MainApp" 
           component={TabNavigator} 
+        />
+         <Stack.Screen 
+          name="DoctorListScreen" 
+          component={DoctorListScreen} 
         />
         <Stack.Screen 
           name="Chat" 
