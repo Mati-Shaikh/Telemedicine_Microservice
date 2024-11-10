@@ -106,4 +106,8 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
+<<<<<<< HEAD
 export default LoginScreen;
+=======
+export default LoginScreen;
+>>>>>>> 31e774ea5c2e913f54c9077d4aa17561d7563420
