@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Make sure to install this package
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
 
 const ProfileScreen = () => {
   const healthMetrics = [
