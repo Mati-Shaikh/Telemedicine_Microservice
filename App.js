@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from './screens/LoginScreen';
-//import RegisterScreen from './screens/RegisterScreen';
+import RegisterScreen from './screens/RegisterScreen';
 //import OTPScreen from './screens/OTPScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
@@ -60,14 +60,15 @@ export default function App() {
           headerShown: false
         }}
       >
+      <Stack.Screen 
+  name="Register" 
+  component={RegisterScreen} 
+/>
         <Stack.Screen 
           name="Login" 
           component={LoginScreen} 
         />
-        <Stack.Screen 
-          name="Register" 
-          //component={RegisterScreen} 
-        />
+        
         <Stack.Screen 
           name="OTP" 
           //component={OTPScreen} 
