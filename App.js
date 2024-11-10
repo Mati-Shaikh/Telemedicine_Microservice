@@ -5,13 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from './screens/LoginScreen';
-<<<<<<< HEAD
-//import RegisterScreen from './screens/RegisterScreen';
+import DiseaseDetailScreen from './screens/DiseaseDetailScreen';
 import DoctorListScreen from './screens/DoctorListScreen';
-=======
-import RegisterScreen from './screens/RegisterScreen';
-//import OTPScreen from './screens/OTPScreen';
->>>>>>> 0e8e5adee7b7feff72db1bfe06734167eb72b7e6
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import AppointmentScreen from './screens/AppointmentScreen';
@@ -65,15 +60,10 @@ export default function App() {
           headerShown: false
         }}
       >
-      <Stack.Screen 
-  name="Register" 
-  component={RegisterScreen} 
-/>
         <Stack.Screen 
           name="Login" 
           component={LoginScreen} 
         />
-<<<<<<< HEAD
         <Stack.Screen 
           name="DoctorChatRoom" 
           component={DoctorChatRoom} 
@@ -83,9 +73,6 @@ export default function App() {
           name="Register" 
           //component={RegisterScreen} 
         />
-=======
-        
->>>>>>> 0e8e5adee7b7feff72db1bfe06734167eb72b7e6
         <Stack.Screen 
           name="OTP" 
           //component={OTPScreen} 
@@ -98,6 +85,11 @@ export default function App() {
           name="DoctorListScreen" 
           component={DoctorListScreen} 
         />
+        <Stack.Screen 
+    name="DiseaseDetail" 
+    component={DiseaseDetailScreen}
+    options={{ headerShown: false }}
+  />
         <Stack.Screen 
           name="Chat" 
           component={ChatScreen}
