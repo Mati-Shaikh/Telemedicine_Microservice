@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({ navigation }) => {
@@ -9,82 +9,61 @@ const LoginScreen = ({ navigation }) => {
   });
 
   const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#f5f5f5',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  input: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  link: {
-    color: '#007AFF',
-    marginTop: 15,
-    textAlign: 'center',
-  },
-  searchInput: {
-    backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-  doctorCard: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  optionCard: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
-    marginBottom: 15,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: '#f5f5f5',
+      justifyContent: 'center', 
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  menuItem: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-});
+    logoContainer: {
+      alignItems: 'center',
+      marginBottom: 30, 
+    },
+    logo: {
+      width: 100,
+      height: 100,
+      borderRadius: 50, 
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 20,
+      textAlign: 'center',
+    },
+    input: {
+      backgroundColor: '#fff',
+      padding: 15,
+      borderRadius: 10,
+      marginBottom: 15,
+    },
+    button: {
+      backgroundColor: '#008080',
+      padding: 15,
+      borderRadius: 10,
+      alignItems: 'center',
+      marginTop: 10,
+    },
+    buttonText: {
+      color: '#fff',
+      fontWeight: 'bold',
+    },
+    link: {
+      color: '#008080',
+      marginTop: 15,
+      textAlign: 'center',
+    },
+  });
 
   const handleLogin = async () => {
     try {
       const response = await fetch('https://dummyapi.io/data/v1/user', {
         headers: {
-          'app-id': 'YOUR_DUMMY_API_KEY'
-        }
+          'app-id': 'YOUR_DUMMY_API_KEY',
+        },
       });
       const data = await response.json();
       
-      // Simulate login validation
+      
       if (credentials.email && credentials.password) {
         await AsyncStorage.setItem('userToken', 'dummy-token');
         navigation.replace('MainApp');
@@ -96,6 +75,13 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image
+          source={{ uri: 'https://i.pinimg.com/474x/56/e1/66/56e1666259b6090e3e1f8df87e03259c.jpg' }}
+          style={styles.logo}
+        />
+      </View>
+
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
@@ -119,4 +105,5 @@ const LoginScreen = ({ navigation }) => {
     </View>
   );
 };
+
 export default LoginScreen;
