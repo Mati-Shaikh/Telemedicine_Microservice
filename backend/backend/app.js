@@ -4,12 +4,18 @@ const socketIo = require('socket.io');
 const mongoose = require('mongoose');
 const { addSocket, removeSocket, getSocketByUserId } = require('./utils/socketManager');
 const Chat = require('./Models/chat.schema'); // Import the Chat model
+const UserRoute = require('./Routes/auth');
+require("dotenv").config();
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
 app.use(express.json());
+
+const cors = require("cors");
+app.use(cors());
+
 
 // MongoDB connection
 const mongoUri = 'mongodb://localhost:27017/telemedicine'; // Replace with your MongoDB URI
@@ -90,7 +96,9 @@ app.get('/get_chat_history', async (req, res) => {
     return res.status(500).json({ error: 'Failed to retrieve chat history' });
   }
 });
-
+app.get("/",async(req,res)=> {
+   res.status(200).json({ Message: 'Successfuly' });
+})
 // Socket connection
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
@@ -109,7 +117,9 @@ io.on('connection', (socket) => {
   });
 });
 
+
+app.use("/auth", UserRoute);
 // Start the server
-server.listen(3001, () => {
+app.listen(3001, '0.0.0.0',() => {
   console.log('Backend is running on port 3001');
 });

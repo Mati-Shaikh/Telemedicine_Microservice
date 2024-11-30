@@ -6,6 +6,7 @@ const Request = require('../Models/Request')
 const Role = require('../Models/Role')
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
+require("dotenv").config();
 
 const generateToken = (user) => {
   const payload = {
@@ -210,9 +211,12 @@ const UpdateUserPassword = async (req, res) => {
 
 let LoginUser = async (req, res) => {
   try {
+    console.log(req.body)
     const user = await User.findOne({ email: req.body.Email });
+    console.log("2")
 
     if (!user) {
+      console.log("3")
       // If user is not found, return an appropriate response
       const existingRequest = await Request.findOne({ 
         requestType: 'signup', 
@@ -220,13 +224,16 @@ let LoginUser = async (req, res) => {
         status: 'pending' 
       });
       if (existingRequest) {
+        console.log("4")
         return res.status(403).json({ message: "A signup request is already pending for this email." });
       }
       else {
+        console.log("5")
       return res.status(400).json("Wrong credentials!");
       }
     }
 
+    console.log("6")
     
 
     const validated = await bcrypt.compare(req.body.Password, user.passwordHash);
