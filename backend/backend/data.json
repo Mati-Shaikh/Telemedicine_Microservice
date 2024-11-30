@@ -1,0 +1,21 @@
+[{
+    "email": "matishaikh7@gmail.com",
+    "name": "Mati Shaikh",
+    "passwordHash": "$2b$10$S1iVCyoy3pDK3/AaO81pWeFhcnu35spO2RzAd3gp3IjH0hUV013fO",
+    "role": "Patient",
+    "status": "active",
+    "googleId": null,
+    "createdAt": "2024-11-30T11:45:30.526Z",
+    "updatedAt": "2024-11-30T11:45:30.526Z"
+  },
+  {
+    "email": "bilal@gmail.com",
+    "name": "Bilal Farooqi",
+    "passwordHash": "$2b$10$RAsFp33SRPbGpzM/Ft9l.eeHS4eqEx6chjsPbWFDsm11LA0cs0PgO",
+    "role": "Doctor",
+    "status": "active",
+    "googleId": null,
+    "createdAt": "2024-11-30T11:53:31.364Z",
+    "updatedAt": "2024-11-30T11:53:31.364Z"
+  }
+]
