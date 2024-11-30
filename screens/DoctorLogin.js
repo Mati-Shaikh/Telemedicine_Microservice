@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoginScreen = ({ navigation }) => {
+const DoctorLoginScreen = ({ navigation }) => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -13,16 +13,16 @@ const LoginScreen = ({ navigation }) => {
       flex: 1,
       padding: 20,
       backgroundColor: '#f5f5f5',
-      justifyContent: 'center', 
+      justifyContent: 'center',
     },
     logoContainer: {
       alignItems: 'center',
-      marginBottom: 30, 
+      marginBottom: 30,
     },
     logo: {
       width: 100,
       height: 100,
-      borderRadius: 50, 
+      borderRadius: 50,
     },
     title: {
       fontSize: 24,
@@ -37,7 +37,7 @@ const LoginScreen = ({ navigation }) => {
       marginBottom: 15,
     },
     button: {
-      backgroundColor: '#008080',
+      backgroundColor: '#005f73',
       padding: 15,
       borderRadius: 10,
       alignItems: 'center',
@@ -48,7 +48,7 @@ const LoginScreen = ({ navigation }) => {
       fontWeight: 'bold',
     },
     link: {
-      color: '#008080',
+      color: '#005f73',
       marginTop: 15,
       textAlign: 'center',
     },
@@ -56,17 +56,9 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('https://dummyapi.io/data/v1/user', {
-        headers: {
-          'app-id': 'YOUR_DUMMY_API_KEY',
-        },
-      });
-      const data = await response.json();
-      
-      
       if (credentials.email && credentials.password) {
-        await AsyncStorage.setItem('userToken', 'dummy-token');
-        navigation.replace('MainApp');
+        await AsyncStorage.setItem('doctorToken', 'dummy-token');
+        navigation.replace('DoctorDashboard');
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -82,16 +74,16 @@ const LoginScreen = ({ navigation }) => {
         />
       </View>
 
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Doctor Login</Text>
       <TextInput
         style={styles.input}
-        placeholder="EMAIL / MOBILE NUMBER"
+        placeholder="Email / Username"
         value={credentials.email}
         onChangeText={(text) => setCredentials({ ...credentials, email: text })}
       />
       <TextInput
         style={styles.input}
-        placeholder="PASSWORD"
+        placeholder="Password"
         secureTextEntry
         value={credentials.password}
         onChangeText={(text) => setCredentials({ ...credentials, password: text })}
@@ -99,11 +91,11 @@ const LoginScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-        <Text style={styles.link}>Register new account</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('DoctorRegister')}>
+        <Text style={styles.link}>Register as a Doctor</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default LoginScreen;
+export default DoctorLoginScreen;
