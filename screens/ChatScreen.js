@@ -124,7 +124,7 @@ const ChatScreen = () => {
   };
 
   const renderMessage = ({ item }) => {
-    const isSentByDoctor = item.senderId === doctorId;
+    const isSentByDoctor = item.senderId !== doctorId;
 
     return (
       <View
