@@ -263,6 +263,63 @@ let LoginUser = async (req, res) => {
   }
 };
 
+const fetchProfile = async (req, res) => {
+  try {
+    // Retrieve the user ID and role from res.locals (set by the verifyToken middleware)
+    const userId = res.locals.userId; // This is the MongoDB _id of the user
+    const userRole = res.locals.userrole;
+
+    console.log(userId);
+    console.log(userRole);
+
+    let profile;
+
+    if (userRole === "Doctor") {
+      // Fetch doctor profile based on the user ID
+      profile = await User.findOne({ _id: userId, role: "Doctor" }).select("_id name role");
+      if (!profile) return res.status(404).json("Doctor profile not found");
+    } else if (userRole === "Patient") {
+      // Fetch patient profile based on the user ID
+      profile = await User.findOne({ _id: userId, role: "Patient" }).select("_id name role");
+      if (!profile) return res.status(404).json("Patient profile not found");
+    } else {
+      return res.status(400).json("Invalid role");
+    }
+
+    // Return the profile with required fields
+    return res.status(200).json(profile);
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    return res.status(500).json("Internal server error");
+  }
+};
+
+const fetchDoctors = async (req, res) => {
+  try {
+    const doctors = await User.find({ role: "Doctor" }).select("_id name role");
+    if (!doctors || doctors.length === 0) {
+      return res.status(404).json("No doctors found");
+    }
+    return res.status(200).json(doctors);
+  } catch (error) {
+    console.error("Error fetching doctors:", error);
+    return res.status(500).json("Internal server error");
+  }
+};
+
+const fetchPatients = async (req, res) => {
+  try {
+    const patients = await User.find({ role: "Patient" }).select("_id name role");
+    if (!patients || patients.length === 0) {
+      return res.status(404).json("No patients found");
+    }
+    return res.status(200).json(patients);
+  } catch (error) {
+    console.error("Error fetching patients:", error);
+    return res.status(500).json("Internal server error");
+  }
+};
+
 
 
 let LoginGoogle = async (req, res) => {
@@ -456,4 +513,4 @@ const PermissionChange = async (req, res) => {
 
 
 
-module.exports = { RegisterUser, LoginUser, VerifyEmail, RegisterUserGoogle, LoginGoogle, GetUserProfile, ProtectedRoute, GetRequests, RoleChange, PermissionChange, VerifyUserCredentials, UpdateUserPassword}
+module.exports = {fetchDoctors,fetchPatients, fetchProfile,RegisterUser, LoginUser, VerifyEmail, RegisterUserGoogle, LoginGoogle, GetUserProfile, ProtectedRoute, GetRequests, RoleChange, PermissionChange, VerifyUserCredentials, UpdateUserPassword}

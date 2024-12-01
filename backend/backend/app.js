@@ -16,7 +16,6 @@ app.use(express.json());
 const cors = require("cors");
 app.use(cors());
 
-
 // MongoDB connection
 const mongoUri = 'mongodb://localhost:27017/telemedicine'; // Replace with your MongoDB URI
 mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -31,7 +30,6 @@ app.post('/send_message', async (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  // Save message to MongoDB
   try {
     // Find or create a chat document between doctor and patient
     let chat = await Chat.findOne({ doctorId, patientId });
@@ -67,7 +65,7 @@ app.post('/send_message', async (req, res) => {
       console.log(`No socket found for patient ${patientId}`);
     }
 
-    return res.status(200).json({ message: 'Message sent successfully' });
+    return res.status(200).json({ chat });
   } catch (error) {
     console.error('Error saving chat:', error);
     return res.status(500).json({ error: 'Failed to save the chat' });
@@ -75,8 +73,8 @@ app.post('/send_message', async (req, res) => {
 });
 
 // Endpoint to get chat history for a doctor-patient pair
-app.get('/get_chat_history', async (req, res) => {
-  const { doctorId, patientId } = req.query;
+app.get('/get_chat_history/:doctorId/:patientId', async (req, res) => {
+  const { doctorId, patientId } = req.params;
 
   if (!doctorId || !patientId) {
     return res.status(400).json({ error: 'Missing doctorId or patientId' });
@@ -96,9 +94,8 @@ app.get('/get_chat_history', async (req, res) => {
     return res.status(500).json({ error: 'Failed to retrieve chat history' });
   }
 });
-app.get("/",async(req,res)=> {
-   res.status(200).json({ Message: 'Successfuly' });
-})
+
+
 // Socket connection
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
@@ -117,9 +114,9 @@ io.on('connection', (socket) => {
   });
 });
 
-
 app.use("/auth", UserRoute);
+
 // Start the server
-app.listen(3001, '0.0.0.0',() => {
+server.listen(3001, '0.0.0.0', () => {
   console.log('Backend is running on port 3001');
 });

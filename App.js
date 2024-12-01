@@ -12,8 +12,10 @@ import ProfileScreen from './screens/ProfileScreen';
 import AppointmentScreen from './screens/AppointmentScreen';
 import ConsultScreen from './screens/ConsultScreen';
 import EducationScreen from './screens/EducationScreen';
-import ChatScreen from './screens/ChatRoomScreen';
+import ChatScreen from './screens/ChatScreen';
 import DoctorChatRoom from './screens/DoctorChat';
+import DoctorCallList from './screens/DoctorsCallList';
+import AudioCall from './screens/AudioCall';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -54,48 +56,38 @@ const TabNavigator = () => {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator 
+      <Stack.Navigator
         initialRouteName="Login"
         screenOptions={{
           headerShown: false
         }}
       >
-      <Stack.Screen 
-  name="Register" 
-  component={RegisterScreen} 
-/>
-        <Stack.Screen 
-          name="Login" 
-          component={LoginScreen} 
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
         />
-        <Stack.Screen 
-          name="DoctorChatRoom" 
-          component={DoctorChatRoom} 
+        <Stack.Screen
+          name="DoctorChatRoom"
+          component={DoctorChatRoom}
           options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="Register" 
-          //component={RegisterScreen} 
+        <Stack.Screen
+          name="MainApp"
+          component={TabNavigator}
         />
-        <Stack.Screen 
-          name="OTP" 
-          //component={OTPScreen} 
+         <Stack.Screen
+          name="DoctorListScreen"
+          component={DoctorListScreen}
         />
-        <Stack.Screen 
-          name="MainApp" 
-          component={TabNavigator} 
-        />
-         <Stack.Screen 
-          name="DoctorListScreen" 
-          component={DoctorListScreen} 
-        />
-        <Stack.Screen 
-    name="DiseaseDetail" 
+        <Stack.Screen
+    name="DiseaseDetail"
     component={DiseaseDetailScreen}
     options={{ headerShown: false }}
   />
-        <Stack.Screen 
-          name="Chat" 
+  <Stack.Screen name="DoctorCallList" component={DoctorCallList} />
+<Stack.Screen name="AudioCall" component={AudioCall} />
+        <Stack.Screen
+          name="Chat"
           component={ChatScreen}
           options={{
             headerShown: true,

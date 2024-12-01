@@ -1,7 +1,7 @@
 const io = require('socket.io-client');  // Import the socket.io-client package
 
-const socket = io('http://localhost:3001', {
-    query: { userId: '674afd092649907c8cebf568' }  // Pass doctorId or patientId here
+const socket = io('http://192.168.18.25:3001', {
+    query: { userId: '674afd092649907c8cebf567' }  // Pass doctorId or patientId here
   });
   
 socket.on('connect', () => {
