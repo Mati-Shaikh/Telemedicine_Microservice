@@ -14,8 +14,11 @@ import ConsultScreen from './screens/ConsultScreen';
 import EducationScreen from './screens/EducationScreen';
 import ChatScreen from './screens/ChatScreen';
 import DoctorChatRoom from './screens/DoctorChat';
+import DoctorChat from './screens/DoctorChat';
 import DoctorCallList from './screens/DoctorsCallList';
 import AudioCall from './screens/AudioCall';
+import DoctorConsultScreen from './screens/DoctorConsultScreen';
+import PatientsListScreen from './screens/PatientsListScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -83,7 +86,7 @@ const TabNavigatorDoctor = () => {
     >
       <Tab.Screen name="Profile" component={ProfileScreen} />
       <Tab.Screen name="Appointment" component={AppointmentScreen} />
-      <Tab.Screen name="Consult" component={ConsultScreen} />
+      <Tab.Screen name="Consult" component={DoctorConsultScreen} />
       <Tab.Screen name="Education" component={EducationScreen} />
     </Tab.Navigator>
   );
@@ -120,6 +123,12 @@ export default function App() {
           component={DoctorListScreen}
         />
         <Stack.Screen
+                  name="PatientsListScreen"
+                  component={PatientsListScreen}
+                />
+
+
+        <Stack.Screen
     name="DiseaseDetail"
     component={DiseaseDetailScreen}
     options={{ headerShown: false }}
@@ -134,6 +143,14 @@ export default function App() {
             title: 'Chat Consultation'
           }}
         />
+        <Stack.Screen
+                  name="Chat2"
+                  component={DoctorChat}
+                  options={{
+                    headerShown: true,
+                    title: 'Chat Consultation'
+                  }}
+                />
       </Stack.Navigator>
     </NavigationContainer>
   );
