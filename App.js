@@ -53,6 +53,42 @@ const TabNavigator = () => {
   );
 };
 
+
+
+const TabNavigatorDoctor = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          switch (route.name) {
+            case 'Profile':
+              iconName = focused ? 'person' : 'person-outline';
+              break;
+            case 'Appointment':
+              iconName = focused ? 'calendar' : 'calendar-outline';
+              break;
+            case 'Consult':
+              iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
+              break;
+            case 'Education':
+              iconName = focused ? 'book' : 'book-outline';
+              break;
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: '#007AFF',
+        tabBarInactiveTintColor: 'gray',
+      })}
+    >
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Appointment" component={AppointmentScreen} />
+      <Tab.Screen name="Consult" component={ConsultScreen} />
+      <Tab.Screen name="Education" component={EducationScreen} />
+    </Tab.Navigator>
+  );
+};
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -75,6 +111,10 @@ export default function App() {
           name="MainApp"
           component={TabNavigator}
         />
+        <Stack.Screen
+                  name="MainAppDoctor"
+                  component={TabNavigatorDoctor}
+                />
          <Stack.Screen
           name="DoctorListScreen"
           component={DoctorListScreen}
