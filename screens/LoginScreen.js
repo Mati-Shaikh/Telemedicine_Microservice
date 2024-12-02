@@ -88,23 +88,32 @@ const LoginScreen = ({ navigation }) => {
           Password: credentials.password,
         }),
       });
-      console.log(response.status);
 
       const data = await response.json();
-      console.log(data);
 
       if (response.ok) {
         await AsyncStorage.setItem('token', data.token);
-        Alert.alert(
-          'Success',
-          `Welcome, ${data.user.FullName}`,
-          [
-            {
-              text: 'OK',
-              onPress: () => navigation.navigate('MainApp')
-            }
-          ]
-        );
+
+        // Decode the token to extract the role
+        const tokenParts = data.token.split('.');
+        if (tokenParts.length === 3) {
+          const payload = JSON.parse(atob(tokenParts[1]));
+          console.log(payload);
+          const userRole = payload.role; // Ensure the payload contains 'userRole'
+          console.log(userRole);
+
+          if (userRole === 'Doctor') {
+            Alert.alert('Success Doctor', `Welcome, ${data.user.FullName}`, [
+              { text: 'OK', onPress: () => navigation.navigate('MainAppDoctor') },
+            ]);
+          } else {
+            Alert.alert('Success Patient', `Welcome, ${data.user.FullName}`, [
+              { text: 'OK', onPress: () => navigation.navigate('MainApp') },
+            ]);
+          }
+        } else {
+          Alert.alert('Error', 'Invalid token format');
+        }
       } else {
         Alert.alert('Login Failed', data.message || 'Invalid credentials');
       }
@@ -115,6 +124,7 @@ const LoginScreen = ({ navigation }) => {
       setLoading(false);
     }
   };
+
 
   return (
     <View style={styles.container}>
