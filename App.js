@@ -19,6 +19,7 @@ import DoctorCallList from './screens/DoctorsCallList';
 import AudioCall from './screens/AudioCall';
 import DoctorConsultScreen from './screens/DoctorConsultScreen';
 import PatientsListScreen from './screens/PatientsListScreen';
+import CallScreen from './screens/CallScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -151,6 +152,12 @@ export default function App() {
                     title: 'Chat Consultation'
                   }}
                 />
+                     {/* Call Screen */}
+                            <Stack.Screen
+                              name="CallScreen"
+                              component={CallScreen}
+                              options={{ headerShown: false }}
+                            />
       </Stack.Navigator>
     </NavigationContainer>
   );
