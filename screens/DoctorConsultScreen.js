@@ -15,7 +15,7 @@ const DoctorConsultScreen = ({ navigation }) => {
       title: 'Real-time Chat',
       description: 'Chat with Patients instantly',
       icon: 'chat',
-      onPress: () => navigation.navigate('DoctorListScreen'),
+      onPress: () => navigation.navigate('PatientsListScreen'),
     },
     {
       title: 'Audio Call',

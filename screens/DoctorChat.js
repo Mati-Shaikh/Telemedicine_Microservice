@@ -1,321 +1,288 @@
-// src/screens/DoctorChatRoomScreen.js
-import React, { useState, useRef, useEffect } from 'react';
-import { 
-  View, 
-  Text, 
-  TouchableOpacity, 
-  StyleSheet, 
-  Image,
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  View,
+  Text,
   TextInput,
+  TouchableOpacity,
   FlatList,
-  SafeAreaView,
-  ScrollView 
+  StyleSheet,
+  Alert,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import io from 'socket.io-client';
 
-const DoctorChatRoomScreen = ({ route, navigation }) => {
-  // Add default values for patient
-  const defaultPatient = {
-    id: 'default',
-    name: 'Patient',
-    image: 'https://via.placeholder.com/40',
-    lastVisit: 'No previous visits'
-  };
+const DoctorChat = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { patientId, patientName } = route.params;
 
-  // Safely access patient data with default values
-  const patient = route?.params?.patient || defaultPatient;
-  const [message, setMessage] = useState('');
-  const [chatHistory, setChatHistory] = useState([]);
-  const chatRef = useRef();
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
+  const flatListRef = useRef(null);
+  const socket = useRef(null);
 
   useEffect(() => {
-    loadChatHistory();
-    // Set up a timer to simulate receiving messages
-    const messageInterval = setInterval(() => {
-      simulateIncomingMessage();
-    }, 15000);
+    loadUserData();
+    initSocket();
 
-    return () => clearInterval(messageInterval);
+    return () => {
+      socket.current?.disconnect();
+    };
   }, []);
 
-  const loadChatHistory = async () => {
+  useEffect(() => {
+    if (userData) {
+      fetchMessages();
+    }
+  }, [userData]);
+
+  const initSocket = () => {
+    socket.current = io('http://192.168.18.25:3001');
+
+    // Listening for messages sent by others
+    socket.current.on('receive_message', (newMessage) => {
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      saveMessages([...messages, newMessage]);
+      flatListRef.current?.scrollToEnd();
+    });
+  };
+
+  const loadUserData = async () => {
     try {
-      const history = await AsyncStorage.getItem(`chat_${patient.id}`);
-      if (history) {
-        setChatHistory(JSON.parse(history));
+      const storedData = await AsyncStorage.getItem('token');
+      if (storedData) {
+        const base64Url = storedData.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const decodedData = JSON.parse(atob(base64));
+        setUserData(decodedData);
       }
+      setLoading(false);
     } catch (error) {
-      console.error('Error loading chat history:', error);
+      console.error('Error loading user data:', error);
+      Alert.alert('Error', 'Failed to load user data');
+      setLoading(false);
     }
   };
 
-  const saveChatHistory = async (newHistory) => {
+  const fetchMessages = async () => {
     try {
-      await AsyncStorage.setItem(`chat_${patient.id}`, JSON.stringify(newHistory));
+      const response = await axios.get(
+        `http://192.168.18.25:3001/get_chat_history/${userData._id}/${patientId}`
+      );
+
+      const fetchedMessages = response.data.messages || [];
+      setMessages(fetchedMessages);
+      saveMessages(fetchedMessages);
     } catch (error) {
-      console.error('Error saving chat history:', error);
+      console.error('Error fetching messages:', error);
+      Alert.alert('Error', 'Failed to fetch messages. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const simulateIncomingMessage = () => {
-    const sampleMessages = [
-      "Doctor, I've been taking the prescribed medication but still feel dizzy.",
-      "When should I schedule my next appointment?",
-      "The symptoms have improved since yesterday.",
-      "Should I continue with the current dosage?",
-    ];
-
-    const randomMessage = {
-      id: Date.now(),
-      text: sampleMessages[Math.floor(Math.random() * sampleMessages.length)],
-      sender: 'patient',
-      timestamp: new Date().toISOString(),
-    };
-
-    const updatedHistory = [...chatHistory, randomMessage];
-    setChatHistory(updatedHistory);
-    saveChatHistory(updatedHistory);
-    chatRef.current?.scrollToEnd();
-  };
-
-  const sendMessage = () => {
-    if (message.trim()) {
-      const newMessage = {
-        id: Date.now(),
-        text: message,
-        sender: 'doctor',
-        timestamp: new Date().toISOString(),
-      };
-      
-      const updatedHistory = [...chatHistory, newMessage];
-      setChatHistory(updatedHistory);
-      saveChatHistory(updatedHistory);
-      setMessage('');
-      
-      chatRef.current?.scrollToEnd();
+  const saveMessages = async (newMessages) => {
+    try {
+      await AsyncStorage.setItem('messages', JSON.stringify(newMessages));
+    } catch (error) {
+      console.error('Error saving messages:', error);
     }
   };
 
-  // Default profile image in case the image URL is invalid
-  const handleImageError = (error) => {
-    console.log('Image loading error:', error);
-    return { uri: 'https://via.placeholder.com/40' };
+  const sendMessage = async () => {
+    if (!inputMessage.trim() || !userData) return;
+
+    const messageData = {
+          doctorId: userData._id,
+          patientId,
+          senderId: userData._id,
+          message: inputMessage.trim(),
+          timestamp: new Date().toISOString(),
+        };
+
+    // Immediately show the sent message in UI
+    setMessages((prevMessages) => [...prevMessages, messageData]);
+    saveMessages([...messages, messageData]);
+    setInputMessage('');
+    flatListRef.current?.scrollToEnd();
+
+    try {
+      await axios.post('http://192.168.18.25:3001/send_message', messageData);
+      socket.current.emit('send_message', messageData);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      Alert.alert('Error', 'Failed to send message');
+    }
   };
+
+  const renderMessage = ({ item }) => {
+    const isSentByDoctor = item.senderId !== patientId;
+
+    return (
+      <View
+        style={[
+          styles.messageBubble,
+          isSentByDoctor ? styles.sentMessage : styles.receivedMessage,
+        ]}
+      >
+        <Text
+          style={[
+            styles.messageText,
+            isSentByDoctor ? styles.sentMessageText : styles.receivedMessageText,
+          ]}
+        >
+          {item.message}
+        </Text>
+      </View>
+    );
+  };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007AFF" />
+      </View>
+    );
+  }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Icon name="arrow-back" size={24} color="#fff" />
-          </TouchableOpacity>
-          <Image 
-            source={{ uri: patient.image }}
-            //defaultSource={require('../assets/default-avatar.png')} // Make sure to add this image to your assets
-            onError={handleImageError}
-            style={styles.headerImage} 
-          />
-          <View style={styles.headerInfo}>
-            <Text style={styles.headerName}>{patient.name}</Text>
-            <Text style={styles.headerStatus}>
-              {patient.lastVisit ? `Last visit: ${patient.lastVisit}` : 'New Patient'}
-            </Text>
-          </View>
-          <TouchableOpacity style={styles.moreButton}>
-            <Icon name="more-vert" size={24} color="#fff" />
-          </TouchableOpacity>
-        </View>
-
-        <FlatList
-          ref={chatRef}
-          data={chatHistory}
-          style={styles.chatContainer}
-          renderItem={({ item }) => (
-            <View style={[
-              styles.messageContainer,
-              item.sender === 'doctor' ? styles.doctorMessage : styles.patientMessage
-            ]}>
-              <Text style={[
-                styles.messageText,
-                item.sender === 'doctor' && { color: '#fff' }
-              ]}>{item.text}</Text>
-              <Text style={[
-                styles.messageTime,
-                item.sender === 'doctor' && { color: '#ddd' }
-              ]}>
-                {new Date(item.timestamp).toLocaleTimeString([], { 
-                  hour: '2-digit', 
-                  minute: '2-digit' 
-                })}
-              </Text>
-            </View>
-          )}
-          keyExtractor={item => item.id.toString()}
-          onContentSizeChange={() => chatRef.current?.scrollToEnd()}
-        />
-
-        <View style={styles.quickReplies}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <TouchableOpacity 
-              style={styles.quickReplyButton}
-              onPress={() => setMessage("Please schedule an appointment with my secretary.")}
-            >
-              <Text style={styles.quickReplyText}>Schedule Appointment</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-              style={styles.quickReplyButton}
-              onPress={() => setMessage("Continue with the prescribed medication and monitor symptoms.")}
-            >
-              <Text style={styles.quickReplyText}>Continue Medication</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-              style={styles.quickReplyButton}
-              onPress={() => setMessage("If symptoms persist, please visit the emergency room.")}
-            >
-              <Text style={styles.quickReplyText}>Emergency Instructions</Text>
-            </TouchableOpacity>
-          </ScrollView>
-        </View>
-
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            value={message}
-            onChangeText={setMessage}
-            placeholder="Type your message..."
-            placeholderTextColor="#666"
-            multiline
-          />
-          <TouchableOpacity 
-            style={styles.sendButton}
-            onPress={sendMessage}
-          >
-            <Icon name="send" size={24} color="#fff" />
-          </TouchableOpacity>
-        </View>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+    >
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={24} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>{patientName}</Text>
       </View>
-    </SafeAreaView>
+
+      <FlatList
+        ref={flatListRef}
+        data={messages}
+        renderItem={renderMessage}
+        keyExtractor={(item, index) => (item._id ? item._id.toString() : index.toString())}
+        contentContainerStyle={styles.messagesList}
+        onContentSizeChange={() => flatListRef.current?.scrollToEnd()}
+      />
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={inputMessage}
+          onChangeText={setInputMessage}
+          placeholder="Type a message..."
+          placeholderTextColor="#666"
+          multiline
+          maxLength={500}
+        />
+        <TouchableOpacity
+          style={[styles.sendButton, !inputMessage.trim() && styles.sendButtonDisabled]}
+          onPress={sendMessage}
+          disabled={!inputMessage.trim()}
+        >
+          <Ionicons
+            name="send"
+            size={24}
+            color={inputMessage.trim() ? '#007AFF' : '#A5A5A5'}
+          />
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    backgroundColor: '#4A90E2',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    elevation: 4,
-  },
-  backButton: {
-    marginRight: 15,
-  },
-  headerImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 10,
-    backgroundColor: '#ddd', // Fallback background color
-  },
-  headerInfo: {
-    flex: 1,
-  },
-  headerName: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  headerStatus: {
-    color: '#ddd',
-    fontSize: 14,
-  },
-  moreButton: {
-    padding: 5,
-  },
-  chatContainer: {
-    flex: 1,
-    padding: 15,
     backgroundColor: '#f5f5f5',
   },
-  messageContainer: {
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  backButton: {
+    padding: 8,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 16,
+  },
+  messagesList: {
+    padding: 16,
+    paddingBottom: 32,
+  },
+  messageBubble: {
     maxWidth: '80%',
-    marginVertical: 5,
     padding: 12,
-    borderRadius: 15,
+    borderRadius: 16,
+    marginVertical: 4,
   },
-  doctorMessage: {
-    backgroundColor: '#4A90E2',
+  sentMessage: {
     alignSelf: 'flex-end',
-    borderBottomRightRadius: 5,
+    backgroundColor: '#007AFF',
   },
-  patientMessage: {
-    backgroundColor: '#E8E8E8',
+  receivedMessage: {
     alignSelf: 'flex-start',
-    borderBottomLeftRadius: 5,
+    backgroundColor: '#E5E5EA',
   },
   messageText: {
     fontSize: 16,
-    color: '#333',
+    lineHeight: 20,
   },
-  messageTime: {
-    fontSize: 12,
-    color: '#666',
-    alignSelf: 'flex-end',
-    marginTop: 4,
+  sentMessageText: {
+    color: '#fff',
   },
-  quickReplies: {
-    height: 50,
-    paddingHorizontal: 10,
-  },
-  quickReplyButton: {
-    backgroundColor: '#E3F2FD',
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginRight: 10,
-    justifyContent: 'center',
-  },
-  quickReplyText: {
-    color: '#4A90E2',
-    fontSize: 14,
+  receivedMessageText: {
+    color: '#000',
   },
   inputContainer: {
     flexDirection: 'row',
-    padding: 10,
-    backgroundColor: '#fff',
     alignItems: 'center',
+    padding: 8,
+    backgroundColor: '#fff',
     borderTopWidth: 1,
     borderTopColor: '#eee',
   },
   input: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 20,
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    marginRight: 10,
+    minHeight: 40,
     maxHeight: 100,
-    color: '#333',
+    backgroundColor: '#f8f8f8',
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginRight: 8,
+    fontSize: 16,
   },
   sendButton: {
-    backgroundColor: '#4A90E2',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 8,
+  },
+  sendButtonDisabled: {
+    opacity: 0.5,
   },
 });
 
-export default DoctorChatRoomScreen;
+export default DoctorChat;
