@@ -1,0 +1,499 @@
+[
+    {
+      "id": "1",
+      "name": "Diabetes",
+      "shortDescription": "A disease that occurs when blood glucose is too high",
+      "causes": [
+        "Insufficient insulin production",
+        "Insulin resistance",
+        "Genetic factors",
+        "Obesity"
+      ],
+      "symptoms": [
+        "Increased thirst",
+        "Frequent urination",
+        "Extreme hunger",
+        "Unexplained weight loss"
+      ],
+      "treatment": "Management through diet, exercise, and medication"
+    },
+    {
+      "id": "2",
+      "name": "Hypertension",
+      "shortDescription": "High blood pressure that can lead to severe health complications",
+      "causes": [
+        "Age",
+        "Obesity",
+        "Genetics",
+        "High sodium intake"
+      ],
+      "symptoms": [
+        "Headaches",
+        "Shortness of breath",
+        "Nosebleeds",
+        "Visual changes"
+      ],
+      "treatment": "Lifestyle changes and medication"
+    },
+    {
+      "id": "3",
+      "name": "Asthma",
+      "shortDescription": "A condition in which airways narrow and swell",
+      "causes": [
+        "Allergies",
+        "Respiratory infections",
+        "Cold air",
+        "Exercise"
+      ],
+      "symptoms": [
+        "Shortness of breath",
+        "Wheezing",
+        "Chest tightness",
+        "Coughing"
+      ],
+      "treatment": "Inhalers, medication, and avoiding triggers"
+    },
+    {
+      "id": "4",
+      "name": "Heart Disease",
+      "shortDescription": "A range of heart-related conditions",
+      "causes": [
+        "Smoking",
+        "Poor diet",
+        "Lack of exercise",
+        "Genetics"
+      ],
+      "symptoms": [
+        "Chest pain",
+        "Shortness of breath",
+        "Fatigue",
+        "Palpitations"
+      ],
+      "treatment": "Lifestyle changes, medication, and surgery if necessary"
+    },
+    {
+      "id": "5",
+      "name": "Obesity",
+      "shortDescription": "A disorder involving excessive body fat",
+      "causes": [
+        "Overeating",
+        "Lack of physical activity",
+        "Genetic predisposition",
+        "Medical conditions"
+      ],
+      "symptoms": [
+        "High body mass index (BMI)",
+        "Shortness of breath",
+        "Joint pain",
+        "Low energy levels"
+      ],
+      "treatment": "Diet changes, exercise, medication, and surgery"
+    },
+    {
+      "id": "6",
+      "name": "Alzheimer's Disease",
+      "shortDescription": "A progressive brain disorder causing memory loss",
+      "causes": [
+        "Age",
+        "Genetics",
+        "Brain injury",
+        "Lifestyle factors"
+      ],
+      "symptoms": [
+        "Memory loss",
+        "Confusion",
+        "Difficulty communicating",
+        "Behavior changes"
+      ],
+      "treatment": "Medication and therapy to manage symptoms"
+    },
+    {
+      "id": "7",
+      "name": "Stroke",
+      "shortDescription": "A condition caused by a lack of blood flow to the brain",
+      "causes": [
+        "Blood clots",
+        "Hemorrhage",
+        "High blood pressure",
+        "Atherosclerosis"
+      ],
+      "symptoms": [
+        "Sudden weakness",
+        "Slurred speech",
+        "Blurred vision",
+        "Paralysis"
+      ],
+      "treatment": "Emergency treatment and rehabilitation therapy"
+    },
+    {
+      "id": "8",
+      "name": "Cancer",
+      "shortDescription": "A disease characterized by uncontrolled cell growth",
+      "causes": [
+        "Genetic mutations",
+        "Exposure to carcinogens",
+        "Lifestyle factors",
+        "Chronic infections"
+      ],
+      "symptoms": [
+        "Unusual lumps",
+        "Weight loss",
+        "Fatigue",
+        "Pain"
+      ],
+      "treatment": "Surgery, chemotherapy, and radiation therapy"
+    },
+    {
+      "id": "9",
+      "name": "Arthritis",
+      "shortDescription": "Inflammation of one or more joints",
+      "causes": [
+        "Age",
+        "Injury",
+        "Autoimmune disorders",
+        "Infections"
+      ],
+      "symptoms": [
+        "Joint pain",
+        "Stiffness",
+        "Swelling",
+        "Reduced range of motion"
+      ],
+      "treatment": "Pain management, physical therapy, and medication"
+    },
+    {
+      "id": "10",
+      "name": "Chronic Kidney Disease",
+      "shortDescription": "A condition involving the gradual loss of kidney function",
+      "causes": [
+        "Diabetes",
+        "High blood pressure",
+        "Glomerulonephritis",
+        "Polycystic kidney disease"
+      ],
+      "symptoms": [
+        "Fatigue",
+        "Swelling",
+        "Frequent urination",
+        "Loss of appetite"
+      ],
+      "treatment": "Dietary changes, medication, and dialysis"
+    },
+    {
+      "id": "11",
+      "name": "Depression",
+      "shortDescription": "A mood disorder causing persistent sadness",
+      "causes": [
+        "Brain chemistry",
+        "Genetics",
+        "Trauma",
+        "Stress"
+      ],
+      "symptoms": [
+        "Feeling sad or empty",
+        "Loss of interest",
+        "Fatigue",
+        "Difficulty concentrating"
+      ],
+      "treatment": "Therapy, medication, and lifestyle changes"
+    },
+    {
+      "id": "12",
+      "name": "COVID-19",
+      "shortDescription": "A respiratory illness caused by a coronavirus",
+      "causes": [
+        "Infection by SARS-CoV-2 virus"
+      ],
+      "symptoms": [
+        "Fever",
+        "Cough",
+        "Fatigue",
+        "Loss of taste or smell"
+      ],
+      "treatment": "Supportive care and antiviral medication"
+    },
+    {
+      "id": "13",
+      "name": "Tuberculosis",
+      "shortDescription": "A bacterial infection that primarily affects the lungs",
+      "causes": [
+        "Infection by Mycobacterium tuberculosis"
+      ],
+      "symptoms": [
+        "Persistent cough",
+        "Chest pain",
+        "Weight loss",
+        "Night sweats"
+      ],
+      "treatment": "Long-term antibiotic therapy"
+    },
+    {
+      "id": "14",
+      "name": "Parkinson's Disease",
+      "shortDescription": "A progressive nervous system disorder affecting movement",
+      "causes": [
+        "Unknown in most cases",
+        "Genetics",
+        "Environmental factors"
+      ],
+      "symptoms": [
+        "Tremors",
+        "Stiffness",
+        "Slowed movement",
+        "Impaired balance"
+      ],
+      "treatment": "Medication and therapy to manage symptoms"
+    },
+    {
+      "id": "15",
+      "name": "Epilepsy",
+      "shortDescription": "A neurological disorder marked by sudden recurrent seizures",
+      "causes": [
+        "Genetic factors",
+        "Brain injury",
+        "Stroke",
+        "Infections"
+      ],
+      "symptoms": [
+        "Seizures",
+        "Confusion",
+        "Loss of consciousness",
+        "Jerking movements"
+      ],
+      "treatment": "Anti-seizure medications and sometimes surgery"
+    },
+    {
+      "id": "16",
+      "name": "Migraine",
+      "shortDescription": "A headache disorder characterized by intense pain",
+      "causes": [
+        "Stress",
+        "Hormonal changes",
+        "Certain foods",
+        "Environmental factors"
+      ],
+      "symptoms": [
+        "Severe headache",
+        "Nausea",
+        "Sensitivity to light",
+        "Vision disturbances"
+      ],
+      "treatment": "Pain relievers, preventive medications, and lifestyle changes"
+    },
+    {
+      "id": "17",
+      "name": "Hepatitis B",
+      "shortDescription": "A serious liver infection caused by the hepatitis B virus",
+      "causes": [
+        "Contact with infected bodily fluids",
+        "Sharing needles",
+        "Sexual contact"
+      ],
+      "symptoms": [
+        "Abdominal pain",
+        "Dark urine",
+        "Jaundice",
+        "Fatigue"
+      ],
+      "treatment": "Antiviral medications and monitoring for liver damage"
+    },
+    {
+      "id": "18",
+      "name": "COPD",
+      "shortDescription": "Chronic Obstructive Pulmonary Disease affects airflow",
+      "causes": [
+        "Smoking",
+        "Long-term exposure to irritants",
+        "Genetic predisposition"
+      ],
+      "symptoms": [
+        "Shortness of breath",
+        "Chronic cough",
+        "Wheezing",
+        "Chest tightness"
+      ],
+      "treatment": "Bronchodilators, inhalers, and pulmonary rehabilitation"
+    },
+    {
+      "id": "19",
+      "name": "Gastritis",
+      "shortDescription": "Inflammation of the stomach lining",
+      "causes": [
+        "Helicobacter pylori infection",
+        "Excessive alcohol use",
+        "Chronic vomiting",
+        "NSAIDs overuse"
+      ],
+      "symptoms": [
+        "Stomach pain",
+        "Nausea",
+        "Vomiting",
+        "Bloating"
+      ],
+      "treatment": "Antacids, antibiotics, and dietary changes"
+    },
+    {
+      "id": "20",
+      "name": "Pneumonia",
+      "shortDescription": "Infection that inflames air sacs in the lungs",
+      "causes": [
+        "Bacterial infection",
+        "Viral infection",
+        "Fungal infection"
+      ],
+      "symptoms": [
+        "Cough with phlegm",
+        "Fever",
+        "Shortness of breath",
+        "Chest pain"
+      ],
+      "treatment": "Antibiotics, antivirals, and rest"
+    },
+    {
+      "id": "21",
+      "name": "Anemia",
+      "shortDescription": "A condition where there is a lack of healthy red blood cells",
+      "causes": [
+        "Iron deficiency",
+        "Vitamin deficiency",
+        "Chronic diseases",
+        "Blood loss"
+      ],
+      "symptoms": [
+        "Fatigue",
+        "Weakness",
+        "Pale skin",
+        "Shortness of breath"
+      ],
+      "treatment": "Supplements, dietary changes, and treating underlying causes"
+    },
+    {
+      "id": "22",
+      "name": "Psoriasis",
+      "shortDescription": "A skin disease causing red, scaly patches",
+      "causes": [
+        "Immune system dysfunction",
+        "Genetics",
+        "Triggers like stress"
+      ],
+      "symptoms": [
+        "Scaly patches",
+        "Itching",
+        "Cracked skin",
+        "Joint pain in severe cases"
+      ],
+      "treatment": "Topical treatments, phototherapy, and medication"
+    },
+    {
+      "id": "23",
+      "name": "Ulcerative Colitis",
+      "shortDescription": "A chronic inflammatory bowel disease",
+      "causes": [
+        "Immune system response",
+        "Genetics",
+        "Environmental triggers"
+      ],
+      "symptoms": [
+        "Diarrhea with blood",
+        "Abdominal pain",
+        "Fatigue",
+        "Weight loss"
+      ],
+      "treatment": "Anti-inflammatory drugs and surgery if needed"
+    },
+    {
+      "id": "24",
+      "name": "Dengue Fever",
+      "shortDescription": "A mosquito-borne viral disease",
+      "causes": [
+        "Dengue virus transmitted by Aedes mosquitoes"
+      ],
+      "symptoms": [
+        "High fever",
+        "Severe headache",
+        "Muscle pain",
+        "Skin rash"
+      ],
+      "treatment": "Supportive care and hydration"
+    },
+    {
+      "id": "25",
+      "name": "Cholera",
+      "shortDescription": "An acute diarrheal illness caused by bacteria",
+      "causes": [
+        "Ingestion of contaminated water or food"
+      ],
+      "symptoms": [
+        "Watery diarrhea",
+        "Dehydration",
+        "Abdominal cramps",
+        "Nausea"
+      ],
+      "treatment": "Oral rehydration solutions and antibiotics"
+    },
+    {
+      "id": "26",
+      "name": "Lupus",
+      "shortDescription": "An autoimmune disease that affects various body systems",
+      "causes": [
+        "Immune system attack on healthy tissue",
+        "Genetics",
+        "Environmental factors"
+      ],
+      "symptoms": [
+        "Fatigue",
+        "Joint pain",
+        "Skin rash",
+        "Fever"
+      ],
+      "treatment": "Immunosuppressants and anti-inflammatory drugs"
+    },
+    {
+      "id": "27",
+      "name": "Thyroid Disorders",
+      "shortDescription": "Conditions affecting thyroid hormone production",
+      "causes": [
+        "Iodine deficiency",
+        "Autoimmune diseases",
+        "Genetic predisposition"
+      ],
+      "symptoms": [
+        "Weight changes",
+        "Fatigue",
+        "Hair thinning",
+        "Mood swings"
+      ],
+      "treatment": "Hormone replacement therapy and medication"
+    },
+    {
+      "id": "28",
+      "name": "Varicella (Chickenpox)",
+      "shortDescription": "A contagious viral infection causing an itchy rash",
+      "causes": [
+        "Varicella-zoster virus infection"
+      ],
+      "symptoms": [
+        "Fever",
+        "Itchy rash",
+        "Fatigue",
+        "Headache"
+      ],
+      "treatment": "Antihistamines, antivirals, and rest"
+    },
+    {
+      "id": "29",
+      "name": "Glaucoma",
+      "shortDescription": "A group of eye conditions that damage the optic nerve",
+      "causes": [
+        "High intraocular pressure",
+        "Genetic predisposition"
+      ],
+      "symptoms": [
+        "Vision loss",
+        "Eye pain",
+        "Blurred vision",
+        "Headaches"
+      ],
+      "treatment": "Eye drops, laser treatment, and surgery"
+    }
+  ]
