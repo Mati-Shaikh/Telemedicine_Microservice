@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const { addSocket, removeSocket, getSocketByUserId } = require('./utils/socketManager');
 const Chat = require('./Models/chat.schema'); // Import the Chat model
 const UserRoute = require('./Routes/auth');
+const Feedback = require('./Routes/FeedbackRoutes');
 require("dotenv").config();
 
 const app = express();
@@ -115,6 +116,7 @@ io.on('connection', (socket) => {
 });
 
 app.use("/auth", UserRoute);
+app.use("/feedback", Feedback);
 
 // Start the server
 server.listen(3001, '0.0.0.0', () => {
