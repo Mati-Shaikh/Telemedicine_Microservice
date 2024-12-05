@@ -18,9 +18,13 @@ import DoctorChatRoom from './screens/DoctorChat';
 import DoctorChat from './screens/DoctorChat';
 import DoctorCallList from './screens/DoctorsCallList';
 import AudioCall from './screens/AudioCall';
+import VideoCall from './screens/VideoCall';
 import DoctorConsultScreen from './screens/DoctorConsultScreen';
 import PatientsListScreen from './screens/PatientsListScreen';
+import Feedback from './screens/feedback';
 import CallScreen from './screens/CallScreen';
+import DoctorProfileScreen from './screens/DoctorProfileScreen';
+import ViewFeedback from './screens/ViewFeedback';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -86,7 +90,7 @@ const TabNavigatorDoctor = () => {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Profile" component={DoctorProfileScreen} />
       <Tab.Screen name="Appointment" component={AddAppointmentScreen} />
       <Tab.Screen name="Consult" component={DoctorConsultScreen} />
       <Tab.Screen name="Education" component={EducationScreen} />
@@ -137,6 +141,11 @@ export default function App() {
   />
 
   <Stack.Screen name="DoctorCallList" component={DoctorCallList} />
+  <Stack.Screen name="AudioCall" component={AudioCall} />
+  <Stack.Screen name="Feedback" component={Feedback} />
+  <Stack.Screen name="ViewFeedback" component={ViewFeedback} />
+
+
         <Stack.Screen
           name="Chat"
           component={ChatScreen}
